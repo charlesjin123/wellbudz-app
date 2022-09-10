@@ -1,0 +1,90 @@
+{
+  ".svelte-kit/build/index.js": {
+    "file": "index.js",
+    "src": ".svelte-kit/build/index.js",
+    "isEntry": true,
+    "imports": [
+      "_index-3e01a4ca.js"
+    ],
+    "dynamicImports": [
+      ".svelte-kit/build/hooks.js"
+    ]
+  },
+  "src/routes/fb.js": {
+    "file": "entries/endpoints/fb.js",
+    "src": "src/routes/fb.js",
+    "isEntry": true
+  },
+  "src/routes/__layout.svelte": {
+    "file": "entries/pages/__layout.svelte.js",
+    "src": "src/routes/__layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-3e01a4ca.js",
+      "src/routes/fb.js"
+    ],
+    "css": [
+      "_app/immutable/assets/__layout-dd2e90e0.css"
+    ],
+    "assets": [
+      "_app/immutable/assets/cups-ed0dc455.png",
+      "_app/immutable/assets/background-870890d4.png"
+    ]
+  },
+  ".svelte-kit/runtime/components/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "src": ".svelte-kit/runtime/components/error.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-3e01a4ca.js"
+    ]
+  },
+  "src/routes/home.svelte": {
+    "file": "entries/pages/home.svelte.js",
+    "src": "src/routes/home.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-3e01a4ca.js"
+    ]
+  },
+  "src/routes/index.svelte": {
+    "file": "entries/pages/index.svelte.js",
+    "src": "src/routes/index.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-3e01a4ca.js"
+    ]
+  },
+  "src/routes/login.svelte": {
+    "file": "entries/pages/login.svelte.js",
+    "src": "src/routes/login.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-3e01a4ca.js",
+      "_LoginForm-3c1336f4.js"
+    ]
+  },
+  "src/routes/signup.svelte": {
+    "file": "entries/pages/signup.svelte.js",
+    "src": "src/routes/signup.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-3e01a4ca.js",
+      "_LoginForm-3c1336f4.js"
+    ]
+  },
+  "_index-3e01a4ca.js": {
+    "file": "_app/immutable/chunks/index-3e01a4ca.js"
+  },
+  "_LoginForm-3c1336f4.js": {
+    "file": "_app/immutable/chunks/LoginForm-3c1336f4.js",
+    "imports": [
+      "_index-3e01a4ca.js"
+    ]
+  },
+  ".svelte-kit/build/hooks.js": {
+    "file": "_app/immutable/chunks/hooks-bced8853.js",
+    "src": ".svelte-kit/build/hooks.js",
+    "isDynamicEntry": true
+  }
+}
