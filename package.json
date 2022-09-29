@@ -30,6 +30,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/supabase-js": "^1.35.7",
 		"firebase": "^9.9.2",
 		"svelte-material-ui": "^6.0.0"
 	}
