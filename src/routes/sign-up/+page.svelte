@@ -7,7 +7,9 @@
 	<div class="bg-white rounded-2xl p-10">
 		<p class="text-4xl font-bold mb-5 text-center">Sign Up</p>
 		<LoginForm title="signup" />
-		<p class="mt-5 text-center w-72 text-black hover:text-wb-orange"><a href="/">Already have an account? Login.</a></p>
+		<div class="flex justify-center">
+			<p class="mt-5 text-center w-72 text-black hover:text-wb-orange"><a href="/">Already have an account? Login.</a></p>
+		</div>
 	</div>
 </div>
 

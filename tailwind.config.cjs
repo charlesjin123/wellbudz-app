@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['"Open Sans"'],
+        //'sans': ['"Inter"'],
         'poppins': ['Poppins', 'sans-serif'],
       },
       backgroundImage: {

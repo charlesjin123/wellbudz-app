@@ -6,7 +6,7 @@
 
 <div class="grid grid-rows-1 grid-cols-2 mx-10 my-5 gap-5">
 	<div class="grid grid-cols-1 gap-5">
-		<p class="text-4xl">Your Goals:</p>
+		<p class="text-4xl font-bold">Your Goals:</p>
 		<div class="flex gap-10 justify-between">
 			<div class="w-full h-52 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200">
 				<a href="#" class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100" data-modal-toggle="goalDetailsModal">
@@ -96,7 +96,7 @@
 			</div>
 			<button class="w-40 text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5" data-modal-toggle="addGoalModal">Add Goal</button>
 		</div>
-		<p class="text-4xl">Your Buddy's Goals:</p>
+		<p class="text-4xl font-bold">Your Buddy's Goals:</p>
 		<div class="flex gap-10 justify-between">
 			<div class="w-full h-52 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200">
 				<a href="#" class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100" data-modal-toggle="goalDetailsModal">
@@ -116,7 +116,7 @@
 			</div>
 			<button class="w-40 text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5">View Partner Profile</button>
 		</div>
-		<p class="text-4xl">Your Streak: 7 days</p>
+		<p class="text-4xl font-bold">Your Streak: 7 days</p>
 	</div>
 	<!-- <div class="w-96 h-full bg-gray-400 justify-self-center grid items-center">
 		<p class="text-center">Chat</p>
