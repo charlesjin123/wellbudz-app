@@ -1,5 +1,5 @@
 <script>
-	import LoginForm from "../lib/components/LoginForm.svelte";
+	import LoginForm from "$lib/components/LoginForm.svelte";
 </script>
 
 <img src="img/logo.png" alt="WellBudz Logo" class="w-14 mt-5 ml-5 absolute z-10">
@@ -7,7 +7,7 @@
 	<div class="bg-white rounded-2xl p-10">
 		<p class="text-4xl font-bold mb-5 text-center">Sign Up</p>
 		<LoginForm title="signup" />
-		<p class="mt-5 text-center w-72 text-black hover:text-wb-orange"><a href="/login">Already have an account? Login.</a></p>
+		<p class="mt-5 text-center w-72 text-black hover:text-wb-orange"><a href="/">Already have an account? Login.</a></p>
 	</div>
 </div>
 

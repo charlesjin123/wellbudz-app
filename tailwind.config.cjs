@@ -1,10 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{html,js,svelte,ts}'],
+  // corePlugins: {
+  //   preflight: false,
+  // },
+  content: [
+    './src/**/*.{html,js,svelte,ts}',
+    './node_modules/flowbite/**/*.js',
+  ],
   theme: {
     extend: {
       fontFamily: {
-        'sans': ["PT\\ Sans"],
+        'sans': ['"Open Sans"'],
+        'poppins': ['Poppins', 'sans-serif'],
       },
       backgroundImage: {
         "lemon-background": "url('/img/background.png')",
@@ -18,5 +25,8 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
+  darkMode: 'class',
 }
