@@ -7,9 +7,9 @@
 	let email
 	let password
 	let passwordConfirm
-	let firstName
-	let lastName
-	let age
+	// let firstName
+	// let lastName
+	// let age
 
 	const login = async () => {
 		if (title == 'login') {
@@ -36,17 +36,26 @@
 				let {user, error} = await supabase.auth.signUp({ email, password })
 				if (error) throw error
 
-				const userData = {
-					id: user.id,
-					email: email,
-					first_name: firstName,
-					last_name: lastName,
-					age: age,
-					updated_at: new Date(),
-				}
+				// userData.set({
+				// 	id: user.id,
+				// 	email: email,
+				// 	first_name: firstName,
+				// 	last_name: lastName,
+				// 	age: age,
+				// 	updated_at: new Date(),
+				// });
 
-				const {data, error: error1} = await supabase.from('profiles').insert(userData, {returning: 'minimal'});
-				if (error1) throw error1
+				// const userData = {
+				// 	id: user.id,
+				// 	email: email,
+				// 	first_name: firstName,
+				// 	last_name: lastName,
+				// 	age: age,
+				// 	updated_at: new Date(),
+				// }
+
+				// const {data, error: error1} = await supabase.from('profiles').insert(userData, {returning: 'minimal'});
+				// if (error1) throw error1
 
 				alert('Sign up successful! A confirmation email has been sent!');
 			} catch (error) {
@@ -63,7 +72,7 @@
 		<label for="emailInput" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
 		<input type="email" id="emailInput" bind:value={email} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring focus:ring-wb-blue focus:border-wb-blue block w-full p-2.5" required>
 	</div>
-	{#if title != 'login'}
+	<!-- {#if title != 'login'}
 	<div class="grid grid-cols-2 gap-6">
 		<div class="mb-6">
 			<label for="firstName" class="block mb-2 text-sm font-medium text-gray-900">First Name</label>
@@ -78,7 +87,7 @@
 		<label for="age" class="block mb-2 text-sm font-medium text-gray-900">Age</label>
 		<input type="number" id="age" bind:value={age} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring focus:ring-wb-blue focus:border-wb-blue block w-full p-2.5" required>
 	</div>
-	{/if}
+	{/if} -->
 	<div class="mb-6">
 		<label for="passInput" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
 		<input type="password" id="passInput" bind:value={password} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring focus:ring-wb-blue focus:border-wb-blue block w-full p-2.5" required>

@@ -1,11 +1,66 @@
 <script>
+	import Message from '$lib/components/Message.svelte';
+	import MessageForm from '$lib/components/MessageForm.svelte';
+	import { onMount } from 'svelte';
+	import { user, chatMessages, partner, partnerProfile } from '$lib/sessionStore';
+	import { supabase } from '$lib/supabaseClient';
 
+	let loading = false
+
+	// handle auto scroll
+	export let chatWindow
+	// let autoscroll
+
+	onMount(async () => {
+		// try {
+		// 	loading = true
+		// 	autoscroll = div && div.offsetHeight + div.scrollTop > div.scrollHeight - 20;
+		// 	const { data, error } = await supabase.from('messages').select().order('created_at', {ascending: true});
+		// 	if (error) throw error;
+		// 	chatMessages.update(data);
+			
+		// 	console.log($chatMessages);
+		// } catch (error) {
+		// 	alert(error.error_description || error.message);
+		// } finally {
+		// 	if (autoscroll) div.scrollTo(0, div.scrollHeight);
+		// 	loading = false
+		// }
+
+		loading = true
+		// autoscroll = div && div.offsetHeight + div.scrollTop > div.scrollHeight - 20;
+		// let condition = 'sender.eq.'+$user.id+'&receiver.eq.'+$partner+',sender.eq.'+$partner+'&receiver.eq.'+$user.id;
+		const { data, error } = await supabase.from('messages').select().or('sender.eq.'+$user.id+',sender.eq.'+$partner).or('receiver.eq.'+$user.id+',receiver.eq.'+$partner).order('created_at', {ascending: true});
+
+		chatMessages.set(data);
+		
+		// console.log($chatMessages);
+		// if (autoscroll) {
+		// 	console.log("autoscrolling");
+		// 	requestAnimationFrame(() => div.scrollTo(0, div.scrollHeight));
+		// };
+		requestAnimationFrame(() => chatWindow.scrollTo(0, chatWindow.scrollHeight));
+
+		loading = false
+
+		const messages = supabase
+        .from('messages')
+        .on('*', (payload) => {
+			if (payload.new.sender==$user.id || payload.new.sender==$partner) {
+				chatMessages.update(old => [...old, payload.new]);
+            	requestAnimationFrame(() => chatWindow.scrollTo(0, chatWindow.scrollHeight));
+			}
+        })
+        .subscribe()
+
+        return () => messages.unsubscribe()
+	})
 </script>
 
 <div class="flex-1 justify-between flex flex-col border">
 	<div class="flex sm:items-center justify-between px-4 py-3 border-b-2 border-gray-200">
 		<div class="relative flex items-center space-x-4">
-			<div class="relative">
+			<!-- <div class="relative">
 				<span class="absolute text-green-500 right-0 bottom-0">
 					<svg width="20" height="20">
 						<circle cx="8" cy="8" r="8" fill="currentColor" />
@@ -16,10 +71,10 @@
 					alt=""
 					class="w-10 sm:w-16 h-10 sm:h-16 rounded-full"
 				/>
-			</div>
+			</div> -->
 			<div class="flex flex-col leading-tight">
 				<div class="text-2xl mt-1 flex items-center">
-					<span class="text-gray-700 mr-3">Charles Jin</span>
+					<span class="text-gray-700 mr-3 font-bold">{$partnerProfile.first_name + " " + $partnerProfile.last_name}</span>
 				</div>
 				<span class="text-lg text-gray-600">Your Buddy</span>
 			</div>
@@ -35,9 +90,19 @@
 	</div>
 	<div
 		id="messages"
+		bind:this={chatWindow}
 		class="flex flex-col space-y-4 p-3 h-[29rem] overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
 	>
-		<div class="chat-message">
+		{#if $chatMessages.length}
+			{#each $chatMessages as msg (msg.id)}
+				<Message {msg} />
+			{/each}
+		{:else if loading}
+			<p class="loading">Loading...</p>
+		{:else}
+			<!-- <p class="empty">No msgs</p> -->
+		{/if}
+		<!-- <div class="chat-message">
 			<div class="flex items-end">
 				<div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
 					<div>
@@ -226,7 +291,7 @@
 					class="w-6 h-6 rounded-full order-1"
 				/>
 			</div>
-		</div>
+		</div> -->
 	</div>
 	<div class="border-t-2 border-gray-200">
 		<!-- <div class="relative flex">
@@ -317,7 +382,8 @@
 				</button>
 			</div>
 		</div> -->
-		<form>
+		<MessageForm/>
+		<!-- <form>
 			<div class="flex items-center py-2 pl-2 rounded-lg">
 				<textarea id="chat" rows="1" class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
 					<button class="inline-flex justify-center p-2 text-wb-blue rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
@@ -325,7 +391,7 @@
 					<span class="sr-only">Send message</span>
 				</button>
 			</div>
-		</form>
+		</form> -->
 	</div>
 </div>
 
