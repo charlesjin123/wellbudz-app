@@ -2,7 +2,7 @@
 
 	import Chat from '$lib/components/Chat.svelte';
 	import { goto } from '$app/navigation';
-	import { user, userProfile, partnerProfile, streakDays } from '$lib/sessionStore.js';
+	import { user, userProfile, partnerProfile, streakDays, goals, buddyGoals } from '$lib/sessionStore.js';
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
 
@@ -41,9 +41,15 @@
 		})
 		.subscribe()
 
+		var { data, error } = await supabase.from('goals').select("*").eq('userid',$user.id).order('created_at', {ascending: true});
+		goals.set(data);
+		var { data, error } = await supabase.from('goals').select("*").eq('userid',$userProfile.partner).order('created_at', {ascending: true});
+		buddyGoals.set(data);
+		console.log("partner id", $userProfile.partner);
+		console.log("buddy goals", $buddyGoals);
 		return () => {
 			streakUpdateTracker.unsubscribe();
-			streakDayUpdateTracker.unsubscribe();
+			streakDayUpdateTracker.unsubscribe();	
 		}
 	})
 	
@@ -56,11 +62,12 @@
 		<p class="text-4xl font-bold">Your Goals:</p>
 		<div class="flex gap-10 justify-between">
 			<div class="w-full h-52 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200">
+			{#each $goals as goal}
 				<a href="#" class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100" data-modal-toggle="goalDetailsModal">
 					<div class="flex flex-row gap-16">
 						<div class="">
-							<h5 class="text-xl font-bold tracking-tight text-gray-900">Run 5 miles</h5>
-							<p class="font-normal text-gray-700">Do by: 7/17/22</p>
+							<h5 class="text-xl font-bold tracking-tight text-gray-900">{goal.title}</h5>
+							<p class="font-normal text-gray-700">{goal.description}</p>
 						</div>
 						<div class="self-center">
 							<button class="text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
@@ -70,76 +77,7 @@
 						</div>
 					</div>
 				</a>
-				<a href="#" class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100" data-modal-toggle="goalDetailsModal">
-					<div class="flex flex-row gap-16">
-						<div class="">
-							<h5 class="text-xl font-bold tracking-tight text-gray-900">Run 5 miles</h5>
-							<p class="font-normal text-gray-700">Do by: 7/17/22</p>
-						</div>
-						<div class="self-center">
-							<button class="text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-								<span class="sr-only">Check</span>
-							</button>
-						</div>
-					</div>
-				</a>
-				<a href="#" class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100" data-modal-toggle="goalDetailsModal">
-					<div class="flex flex-row gap-16">
-						<div class="">
-							<h5 class="text-xl font-bold tracking-tight text-gray-900">Run 5 miles</h5>
-							<p class="font-normal text-gray-700">Do by: 7/17/22</p>
-						</div>
-						<div class="self-center">
-							<button class=" text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-								<span class="sr-only">Check</span>
-							</button>
-						</div>
-					</div>
-				</a>
-				<a href="#" class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100" data-modal-toggle="goalDetailsModal">
-					<div class="flex flex-row gap-16">
-						<div class="">
-							<h5 class="text-xl font-bold tracking-tight text-gray-900">Run 5 miles</h5>
-							<p class="font-normal text-gray-700">Do by: 7/17/22</p>
-						</div>
-						<div class="self-center">
-							<button class=" text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-								<span class="sr-only">Check</span>
-							</button>
-						</div>
-					</div>
-				</a>
-				<a href="#" class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100" data-modal-toggle="goalDetailsModal">
-					<div class="flex flex-row gap-16">
-						<div class="">
-							<h5 class="text-xl font-bold tracking-tight text-gray-900">Run 5 miles</h5>
-							<p class="font-normal text-gray-700">Do by: 7/17/22</p>
-						</div>
-						<div class="self-center">
-							<button class=" text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-								<span class="sr-only">Check</span>
-							</button>
-						</div>
-					</div>
-				</a>
-				<a href="#" class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100" data-modal-toggle="goalDetailsModal">
-					<div class="flex flex-row gap-16">
-						<div class="">
-							<h5 class="text-xl font-bold tracking-tight text-gray-900">Run 5 miles</h5>
-							<p class="font-normal text-gray-700">Do by: 7/17/22</p>
-						</div>
-						<div class="self-center">
-							<button class=" text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-								<span class="sr-only">Check</span>
-							</button>
-						</div>
-					</div>
-				</a>
+				{/each}
 			</div>
 			<!-- <button class="w-40 text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5" data-modal-toggle="addGoalModal">Add Goal</button> -->
 			<button class="w-40 text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5" on:click={showAddGoalModal}>Add Goal</button>
@@ -147,20 +85,22 @@
 		<p class="text-4xl font-bold">Your Buddy's Goals:</p>
 		<div class="flex gap-10 justify-between">
 			<div class="w-full h-52 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200">
+			{#each $buddyGoals as buddyGoal}
 				<a href="#" class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100" data-modal-toggle="goalDetailsModal">
 					<div class="flex flex-row gap-16">
 						<div class="">
-							<h5 class="text-xl font-bold tracking-tight text-gray-900">Run 5 miles</h5>
-							<p class="font-normal text-gray-700">Do by: 7/17/22</p>
+							<h5 class="text-xl font-bold tracking-tight text-gray-900">{buddyGoal.title}</h5>
+							<p class="font-normal text-gray-700">{buddyGoal.description}</p>
 						</div>
 						<div class="self-center">
-							<button class=" text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+							<button class="text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
 								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
 								<span class="sr-only">Check</span>
 							</button>
 						</div>
 					</div>
 				</a>
+				{/each}
 			</div>
 			<button on:click={toPartnerProfile} class="w-40 text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5">View Partner Profile</button>
 		</div>

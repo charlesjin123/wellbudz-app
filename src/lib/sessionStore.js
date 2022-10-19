@@ -20,7 +20,8 @@ export const userProfile = writable([]);
 export const partnerProfile = writable([]);
 
 export const streakDays = writable([]);
-
+export const goals = writable([]);
+export const buddyGoals = writable([]);
 export const month = writable(false);
 export const year = writable(false);
 export const blankdays = writable([]);
