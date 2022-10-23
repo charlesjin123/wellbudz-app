@@ -27,6 +27,27 @@ export const year = writable(false);
 export const blankdays = writable([]);
 export const no_of_days = writable([]);
 
+// export const resetStores = () => {
+//     user.set(false);
+
+//     chatMessages.set([]);
+
+//     partner.set(false);
+
+//     userProfile.set([]);
+//     partnerProfile.set([]);
+
+//     streakDays.set([]);
+//     goals.set([]);
+//     buddyGoals.set([]);
+//     month.set(false);
+//     year.set(false);
+//     blankdays.set([]);
+//     no_of_days.set([]);
+
+//     console.log("reset stores");
+// }
+
 // export const store = writable < Store > (defaultStore)
 
 

@@ -2,7 +2,7 @@
 	import { user, userProfile, partner, partnerProfile, streakDays, month, year, blankdays, no_of_days } from '$lib/sessionStore';
 	import { supabase } from '$lib/supabaseClient';
 	
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	import LoginForm from '$lib/components/LoginForm.svelte';
 
@@ -16,6 +16,8 @@
 		} else if (event == 'SIGNED_IN') {
 
 			console.log("user signed in");
+			console.log(session.user.email);
+
 			user.set(session.user);
 			// if (userData != null) {
 			// 	console.log("userData val not null");
@@ -33,8 +35,9 @@
 			// }
 
 			// goto("/coming-soon");
+
 			try {
-				const { data, error, count } = await supabase.from('profiles').select('*', { count: 'exact' }).eq('id', $user.id);
+				const { data, error, count } = await supabase.from('profiles').select('*', { count: 'exact' }).eq('id', session.user.id);
 				if (error) throw error;
 				if (count == 0) {
 					goto("/matching");
@@ -138,6 +141,7 @@
 					goto('/waiting-for-match');
 				}
 			} catch (error) {
+				console.log("error from login");
 				alert(error.message || error.description)
 			}
 			

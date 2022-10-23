@@ -1,5 +1,6 @@
 <script>
 	import { supabase } from '$lib/supabaseClient';
+	import { user } from '$lib/sessionStore';
 
 	export let title;
 
