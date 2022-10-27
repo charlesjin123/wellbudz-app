@@ -27,6 +27,12 @@ export const year = writable(false);
 export const blankdays = writable([]);
 export const no_of_days = writable([]);
 
+export const showReportModalHomePage = writable(false);
+
+export const showToast = writable(false);
+export const toastMessage = writable(false);
+export const toastColor = writable(false);
+
 // export const resetStores = () => {
 //     user.set(false);
 

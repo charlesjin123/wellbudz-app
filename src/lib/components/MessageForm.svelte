@@ -12,7 +12,7 @@
 
     const handleSendMsg = async () => {
         try {
-            console.log("sending message");
+            // console.log("sending message");
             if (msg.trim() === '') return
             loading = true
 			const messageData = {
