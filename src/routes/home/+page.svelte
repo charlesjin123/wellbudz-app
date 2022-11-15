@@ -60,9 +60,28 @@
 				isCompleted: false
 			};
 
-			const { mydata, error: error } = await supabase
+			const { mydata, error: error } = await supabase.from('goals').insert(requestData);
+			goalDetailModalOpen=false;
+			var { data1, error1 } = await supabase
 				.from('goals')
-				.insert(requestData);
+				.select('*')
+				.eq('userid', $user.id)
+				.order('created_at', { ascending: true });
+			goals.set(data1);
+		} catch (error) {
+			alert(error.error_description || error.message);
+		}
+	}
+	async function handleDelete(goal) {
+		try {
+			const { mydata, error: error } = await supabase.from('goals').delete().match({ id: goal.id });
+			goalDetailModalOpen=false;
+			var { data1, error1 } = await supabase
+				.from('goals')
+				.select('*')
+				.eq('userid', $user.id)
+				.order('created_at', { ascending: true });
+			goals.set(data1);
 		} catch (error) {
 			alert(error.error_description || error.message);
 		}
@@ -99,6 +118,19 @@
 			})
 			.subscribe();
 
+		const goalsUpdateTracker = supabase.from('goals').on('*', (payload) => {
+			if (payload.old.userid == $user.id) {
+				goals.update((old) => payload.new);
+			}
+		});
+		const buddyGoalsUpdateTracker = supabase
+			.from('goals')
+			.on('*', (payload) => {
+				if (payload.old.id == $userProfile.partner) {
+					buddyGoals.update((old) => payload.new);
+				}
+			})
+			.subscribe();
 		var { data, error } = await supabase
 			.from('goals')
 			.select('*')
@@ -119,6 +151,8 @@
 		return () => {
 			streakUpdateTracker.unsubscribe();
 			streakDayUpdateTracker.unsubscribe();
+			goalsUpdateTracker.unsubscribe();
+			buddyGoalsUpdateTracker.unsubscribe();
 		};
 	});
 </script>
@@ -260,6 +294,13 @@
 					<h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
 						{goalDetails.title}
 					</h3>
+					{#if goalDetails.userid == $user.id}
+						<button
+							type="button"
+							class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+							on:click={handleDelete(goalDetails)}>Delete</button
+						>
+					{/if}
 					<button
 						type="button"
 						on:click={closeGoalDetailModal}
