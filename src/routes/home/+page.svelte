@@ -90,6 +90,21 @@
 		}
 	}
 
+	async function handleComplete(goal) {
+		try {
+			const { mydata, error: error } = await supabase.from('goals').update({"isCompleted": !goal.isCompleted}).match({ id: goal.id });
+			goalDetailModalOpen=false;
+			// var { data1, error1 } = await supabase
+			// 	.from('goals')
+			// 	.select('*')
+			// 	.eq('userid', $user.id)
+			// 	.order('created_at', { ascending: true });
+			// goals.set(data1);
+		} catch (error) {
+			alert(error.error_description || error.message);
+		}
+	}
+
 	async function checkAuth() {
 		if (!$user) {
 			goto('/');
@@ -262,7 +277,7 @@
 					{#each $goals as goal}
 						<a
 							on:click={showGoalDetailModal(goal, true)}
-							class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100"
+							class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 {goal.isCompleted ? 'opacity-70 line-through' : ''}"
 						>
 							<div class="flex flex-row gap-16">
 								<div class="">
@@ -272,6 +287,7 @@
 								<div class="self-center">
 									<button
 										class="text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+										on:click={handleComplete(goal)}
 									>
 										<svg
 											class="w-5 h-5"
@@ -402,7 +418,7 @@
 				<div class="p-4 space-y-3">
 					<p class="text-lg leading-relaxed text-gray-500 dark:text-gray-400">
 						Do by: {goalDetails.date} <br />
-						Status: Incomplete <br />
+						Status: {goalDetails.isCompleted==true ? "Completed" : "Incomplete"} <br />
 						Person: {goalDetailsPerson}
 					</p>
 				</div>
