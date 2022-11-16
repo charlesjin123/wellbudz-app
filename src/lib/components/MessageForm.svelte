@@ -53,7 +53,7 @@
 
                 if (partnerLastChatted[0]['last_chatted'] != null && partnerLastChatted[0]['last_chatted'] == todayDate) {
                     
-                    console.log("adding new streak day");
+                    // console.log("adding new streak day");
 
                     const streakDayData = {
                         partner1: $user.id,

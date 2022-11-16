@@ -92,8 +92,8 @@
 
 	async function handleComplete(goal) {
 		try {
-			const { mydata, error: error } = await supabase.from('goals').update({"isCompleted": !goal.isCompleted}).match({ id: goal.id });
 			goalDetailModalOpen=false;
+			const { mydata, error: error } = await supabase.from('goals').update({"isCompleted": !goal.isCompleted}).match({ id: goal.id });
 			// var { data1, error1 } = await supabase
 			// 	.from('goals')
 			// 	.select('*')
@@ -171,6 +171,24 @@
 					let copy = $buddyGoals;
 					copy.splice(removedGoalKey, 1);
 					buddyGoals.set(copy);
+				}
+			} else if (payload.eventType == "UPDATE") {
+				if (payload.new.userid == $user.id) {
+					var updatedGoalKey;
+					for (let key in $goals) {
+						if ($goals[key].id == payload.new.id) {
+							updatedGoalKey = key;
+						}
+					}
+					$goals[updatedGoalKey] = payload.new;
+				} else if (payload.new.userid == $userProfile.partner) {
+					var updatedGoalKey;
+					for (let key in $goals) {
+						if ($buddyGoals[key].id == payload.new.id) {
+							updatedGoalKey = key;
+						}
+					}
+					$buddyGoals[updatedGoalKey] = payload.new;
 				}
 			}
 			
@@ -275,38 +293,40 @@
 					class="w-full h-52 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200"
 				>
 					{#each $goals as goal}
-						<a
-							on:click={showGoalDetailModal(goal, true)}
-							class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 {goal.isCompleted ? 'opacity-70 line-through' : ''}"
-						>
-							<div class="flex flex-row gap-16">
-								<div class="">
-									<h5 class="text-xl font-bold tracking-tight text-gray-900">{goal.title}</h5>
-									<p class="font-normal text-gray-700">{goal.description}</p>
+						<div class="relative">
+							<a
+								on:click={showGoalDetailModal(goal, true)}
+								class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 {goal.isCompleted ? 'opacity-70 line-through' : ''}"
+							>
+								<div class="flex flex-row">
+									<div class="">
+										<h5 class="text-xl font-bold tracking-tight text-gray-900">{goal.title}</h5>
+										<p class="font-normal text-gray-700">{goal.description}</p>
+									</div>
 								</div>
-								<div class="self-center">
-									<button
-										class="text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
-										on:click={handleComplete(goal)}
+							</a>
+							<div class="absolute right-5 top-7">
+								<button
+									class="text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+									on:click={handleComplete(goal)}
+								>
+									<svg
+										class="w-5 h-5"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M5 13l4 4L19 7"
+										/></svg
 									>
-										<svg
-											class="w-5 h-5"
-											fill="none"
-											stroke="currentColor"
-											viewBox="0 0 24 24"
-											xmlns="http://www.w3.org/2000/svg"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2"
-												d="M5 13l4 4L19 7"
-											/></svg
-										>
-										<span class="sr-only">Check</span>
-									</button>
-								</div>
+									<span class="sr-only">Check</span>
+								</button>
 							</div>
-						</a>
+						</div>
 					{/each}
 				</div>
 				<!-- <button class="w-40 text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5" data-modal-toggle="addGoalModal">Add Goal</button> -->
@@ -321,37 +341,39 @@
 					class="w-full h-52 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200"
 				>
 					{#each $buddyGoals as buddyGoal}
-						<a
-							on:click={showGoalDetailModal(buddyGoal, false)}
-							class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100"
-						>
-							<div class="flex flex-row gap-16">
-								<div class="">
-									<h5 class="text-xl font-bold tracking-tight text-gray-900">{buddyGoal.title}</h5>
-									<p class="font-normal text-gray-700">{buddyGoal.description}</p>
+						<div class="relative">
+							<a
+								on:click={showGoalDetailModal(buddyGoal, false)}
+								class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 {buddyGoal.isCompleted ? 'opacity-70 line-through' : ''}"
+							>
+								<div class="flex flex-row">
+									<div class="">
+										<h5 class="text-xl font-bold tracking-tight text-gray-900">{buddyGoal.title}</h5>
+										<p class="font-normal text-gray-700">{buddyGoal.description}</p>
+									</div>
 								</div>
-								<div class="self-center">
-									<button
-										class="text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+							</a>
+							<!-- <div class="absolute right-5 top-7">
+								<button
+									class="text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+								>
+									<svg
+										class="w-5 h-5"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M5 13l4 4L19 7"
+										/></svg
 									>
-										<svg
-											class="w-5 h-5"
-											fill="none"
-											stroke="currentColor"
-											viewBox="0 0 24 24"
-											xmlns="http://www.w3.org/2000/svg"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2"
-												d="M5 13l4 4L19 7"
-											/></svg
-										>
-										<span class="sr-only">Check</span>
-									</button>
-								</div>
-							</div>
-						</a>
+									<span class="sr-only">Check</span>
+								</button>
+							</div> -->
+						</div>
 					{/each}
 				</div>
 				<button
@@ -382,13 +404,6 @@
 					<h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
 						{goalDetails.title}
 					</h3>
-					{#if goalDetails.userid == $user.id}
-						<button
-							type="button"
-							class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-							on:click={handleDelete(goalDetails)}>Delete</button
-						>
-					{/if}
 					<button
 						type="button"
 						on:click={closeGoalDetailModal}
@@ -422,6 +437,13 @@
 						Person: {goalDetailsPerson}
 					</p>
 				</div>
+				{#if goalDetails.userid == $user.id}
+					<button
+						type="button"
+						class="ml-2 mb-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+						on:click={handleDelete(goalDetails)}>Delete Goal</button
+					>
+				{/if}
 				<!-- <div class="p-4 space-y-6 border-b">
 				<p class="text-lg font-bold leading-relaxed text-gray-500 dark:text-gray-400">
 					Comments
