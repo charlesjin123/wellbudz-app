@@ -52,7 +52,6 @@
 			const [key, value] = field;
 			data[key] = value;
 		}
-		console.log(data);
 		try {
 			const requestData = {
 				...data,
@@ -61,13 +60,15 @@
 			};
 
 			const { mydata, error: error } = await supabase.from('goals').insert(requestData);
-			goalDetailModalOpen=false;
-			var { data1, error1 } = await supabase
-				.from('goals')
-				.select('*')
-				.eq('userid', $user.id)
-				.order('created_at', { ascending: true });
-			goals.set(data1);
+			if (error) throw error;
+			addGoalModalOpen=false;
+			// var { data: data1, error: error1 } = await supabase
+			// 	.from('goals')
+			// 	.select('*')
+			// 	.eq('userid', $user.id)
+			// 	.order('created_at', { ascending: true });
+			// if (error1) throw error1;
+			// goals.set(data1);
 		} catch (error) {
 			alert(error.error_description || error.message);
 		}
@@ -75,13 +76,15 @@
 	async function handleDelete(goal) {
 		try {
 			const { mydata, error: error } = await supabase.from('goals').delete().match({ id: goal.id });
+			if (error) throw error;
 			goalDetailModalOpen=false;
-			var { data1, error1 } = await supabase
-				.from('goals')
-				.select('*')
-				.eq('userid', $user.id)
-				.order('created_at', { ascending: true });
-			goals.set(data1);
+			// var { data: data1, error: error1 } = await supabase
+			// 	.from('goals')
+			// 	.select('*')
+			// 	.eq('userid', $user.id)
+			// 	.order('created_at', { ascending: true });
+			// if (error1) throw error1;
+			// goals.set(data1);
 		} catch (error) {
 			alert(error.error_description || error.message);
 		}
@@ -119,18 +122,87 @@
 			.subscribe();
 
 		const goalsUpdateTracker = supabase.from('goals').on('*', (payload) => {
-			if (payload.old.userid == $user.id) {
-				goals.update((old) => payload.new);
-			}
-		});
-		const buddyGoalsUpdateTracker = supabase
-			.from('goals')
-			.on('*', (payload) => {
-				if (payload.old.id == $userProfile.partner) {
-					buddyGoals.update((old) => payload.new);
+			// console.log("goal update detected");
+			// console.log(payload);
+			if (payload.eventType == "INSERT") {
+				//console.log("goal insert detected");
+				if (payload.new.userid == $user.id) {
+					goals.update((old) => [...old, payload.new]);
+					//console.log("own goal insert detected");
+					//console.log($goals);
+				} else if (payload.new.userid == $userProfile.partner) {
+					buddyGoals.update((old) => [...old, payload.new]);
+					//console.log("partner goal insert detected");
+					//console.log($buddyGoals);
 				}
-			})
-			.subscribe();
+			} else if (payload.eventType == "DELETE") {
+				//console.log("goal delete detected");
+				var removedGoalKey;
+				for (let key in $goals) {
+					if ($goals[key].id == payload.old.id) {
+						removedGoalKey = key;
+					}
+				}
+				if (removedGoalKey != null) {
+					let copy = $goals;
+					copy.splice(removedGoalKey, 1);
+					goals.set(copy);
+				} else {
+					for (let key in $buddyGoals) {
+						if ($buddyGoals[key].id == payload.old.id) {
+							removedGoalKey = key;
+						}
+					}
+					let copy = $buddyGoals;
+					copy.splice(removedGoalKey, 1);
+					buddyGoals.set(copy);
+				}
+			}
+			
+		}).subscribe(); 
+
+		// const goalsDeleteTracker = supabase.from('goals').on('DELETE', (payload) => {
+		// 	console.log("goal delete detected");
+		// 	if (payload.new.userid == $user.id) {
+		// 		goals.update((old) => {
+		// 			var removedGoalKey;
+		// 			for (let [key, value] in old) {
+		// 				if (value.id == payload.new.id) {
+		// 					removedGoalKey = key;
+		// 				}
+		// 			}
+		// 			old.delete(key);
+		// 			return old;
+		// 		});
+		// 		console.log("own goal delete detected");
+		// 		console.log($goals);
+		// 	} else if (payload.new.userid == $userProfile.partner) {
+		// 		buddyGoals.update((old) => {
+		// 			var removedGoalKey;
+		// 			for (let [key, value] in old) {
+		// 				if (value.id == payload.new.id) {
+		// 					removedGoalKey = key;
+		// 				}
+		// 			}
+		// 			old.delete(key);
+		// 			return old;
+		// 		});
+		// 		console.log("partner goal delete detected");
+		// 		console.log($buddyGoals);
+		// 	}
+		// }).subscribe();
+
+		// const buddyGoalsUpdateTracker = supabase
+		// 	.from('goals')
+		// 	.on('*', (payload) => {
+		// 		console.log("new goals change detected");
+		// 		if (payload.new.userid == $userProfile.partner) {
+		// 			buddyGoals.update((old) => [...old, payload.new]);
+		// 			console.log("partner goal update detected");
+		// 			console.log($buddyGoals);
+		// 		}
+		// 	})
+		// 	.subscribe();
 		var { data, error } = await supabase
 			.from('goals')
 			.select('*')
@@ -152,7 +224,7 @@
 			streakUpdateTracker.unsubscribe();
 			streakDayUpdateTracker.unsubscribe();
 			goalsUpdateTracker.unsubscribe();
-			buddyGoalsUpdateTracker.unsubscribe();
+			// buddyGoalsUpdateTracker.unsubscribe();
 		};
 	});
 </script>
