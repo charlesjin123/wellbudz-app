@@ -290,7 +290,7 @@
 			<p class="text-4xl font-bold">Your Goals:</p>
 			<div class="flex gap-10 justify-between">
 				<div
-					class="w-full h-52 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200"
+					class="w-full h-52 2xl:h-80 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200"
 				>
 					{#each $goals as goal}
 						<div class="relative">
@@ -338,7 +338,7 @@
 			<p class="text-4xl font-bold">Your Buddy's Goals:</p>
 			<div class="flex gap-10 justify-between">
 				<div
-					class="w-full h-52 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200"
+					class="w-full h-52 2xl:h-80 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200"
 				>
 					{#each $buddyGoals as buddyGoal}
 						<div class="relative">

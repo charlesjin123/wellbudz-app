@@ -93,7 +93,7 @@
 	<div
 		id="messages"
 		bind:this={chatWindow}
-		class="flex flex-col space-y-4 p-3 h-[29rem] overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+		class="flex flex-col space-y-4 p-3 h-[29rem] 2xl:h-[43rem] overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
 	>
 		{#if $chatMessages.length}
 			{#each $chatMessages as msg (msg.id)}

@@ -37,7 +37,7 @@
 	</div>
 </div>
 {:else}
-<div class="bg-gray-300">
+<div class="bg-gray-300 2xl:h-screen">
 
 <div class="flex justify-center text-3xl font-bold pt-10">
 	Streak Calendar
