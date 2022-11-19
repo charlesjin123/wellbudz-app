@@ -300,8 +300,8 @@
 							>
 								<div class="flex flex-row">
 									<div class="">
-										<h5 class="text-xl font-bold tracking-tight text-gray-900">{goal.title}</h5>
-										<p class="font-normal text-gray-700">{goal.description}</p>
+										<h5 class="text-xl font-bold tracking-tight text-gray-900 text-ellipsis">{goal.title}</h5>
+										<p class="font-normal text-gray-700 text-ellipsis">{goal.description}</p>
 									</div>
 								</div>
 							</a>
@@ -346,11 +346,9 @@
 								on:click={showGoalDetailModal(buddyGoal, false)}
 								class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 {buddyGoal.isCompleted ? 'opacity-70 line-through' : ''}"
 							>
-								<div class="flex flex-row">
-									<div class="">
-										<h5 class="text-xl font-bold tracking-tight text-gray-900">{buddyGoal.title}</h5>
-										<p class="font-normal text-gray-700">{buddyGoal.description}</p>
-									</div>
+								<div class="relative flex flex-col">
+										<h5 class="text-xl max-w-full font-bold tracking-tight text-gray-900 overflow-hidden text-ellipsis">{buddyGoal.title}</h5>
+										<p class="font-normal text-gray-700 overflow-hidden text-ellipsis">{buddyGoal.description}</p>
 								</div>
 							</a>
 							<!-- <div class="absolute right-5 top-7">
@@ -401,7 +399,7 @@
 		<div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
 			<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
 				<div class="flex justify-between items-start px-4 pt-4 rounded-t dark:border-gray-600">
-					<h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
+					<h3 class="text-2xl font-semibold text-gray-900 dark:text-white overflow-hidden text-ellipsis">
 						{goalDetails.title}
 					</h3>
 					<button
@@ -426,7 +424,7 @@
 					</button>
 				</div>
 				<div class="p-4 border-b">
-					<p class="text-lg leading-relaxed">
+					<p class="text-lg leading-relaxed overflow-hidden text-ellipsis">
 						{goalDetails.description}
 					</p>
 				</div>
