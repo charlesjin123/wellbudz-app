@@ -298,11 +298,9 @@
 								on:click={showGoalDetailModal(goal, true)}
 								class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 {goal.isCompleted ? 'opacity-70 line-through' : ''}"
 							>
-								<div class="flex flex-row">
-									<div class="">
-										<h5 class="text-xl font-bold tracking-tight text-gray-900 text-ellipsis">{goal.title}</h5>
-										<p class="font-normal text-gray-700 text-ellipsis">{goal.description}</p>
-									</div>
+								<div class="relative flex flex-col">
+										<h5 class="text-xl max-w-full font-bold tracking-tight text-gray-900 overflow-hidden text-ellipsis">{goal.title}</h5>
+										<p class="font-normal text-gray-700 overflow-hidden text-ellipsis">{goal.description}</p>
 								</div>
 							</a>
 							<div class="absolute right-5 top-7">
