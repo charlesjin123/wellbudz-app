@@ -299,11 +299,13 @@
 								class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 {goal.isCompleted ? 'opacity-70 line-through' : ''}"
 							>
 								<div class="relative flex flex-col">
-										<h5 class="text-xl max-w-full font-bold tracking-tight text-gray-900 overflow-hidden text-ellipsis">{goal.title}</h5>
-										<p class="font-normal text-gray-700 overflow-hidden text-ellipsis">{goal.description}</p>
+										<div class="max-w-[10rem]">
+											<h5 class="text-xl font-bold tracking-tight text-gray-900 overflow-hidden truncate">{goal.title}</h5>
+										</div>
+										<p class="font-normal text-gray-700 overflow-hidden truncate">{goal.date}</p>
 								</div>
 							</a>
-							<div class="absolute right-5 top-7">
+							<div class="absolute right-5 top-7 {goal.isCompleted ? 'opacity-70' : ''}">
 								<button
 									class="text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
 									on:click={handleComplete(goal)}
@@ -345,8 +347,10 @@
 								class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 {buddyGoal.isCompleted ? 'opacity-70 line-through' : ''}"
 							>
 								<div class="relative flex flex-col">
-										<h5 class="text-xl max-w-full font-bold tracking-tight text-gray-900 overflow-hidden text-ellipsis">{buddyGoal.title}</h5>
-										<p class="font-normal text-gray-700 overflow-hidden text-ellipsis">{buddyGoal.description}</p>
+										<div class="max-w-[10rem]">
+											<h5 class="text-xl font-bold tracking-tight text-gray-900 overflow-hidden truncate">{buddyGoal.title}</h5>
+										</div>
+										<p class="font-normal text-gray-700 overflow-hidden truncate">{buddyGoal.date}</p>
 								</div>
 							</a>
 							<!-- <div class="absolute right-5 top-7">
@@ -397,7 +401,7 @@
 		<div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
 			<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
 				<div class="flex justify-between items-start px-4 pt-4 rounded-t dark:border-gray-600">
-					<h3 class="text-2xl font-semibold text-gray-900 dark:text-white overflow-hidden text-ellipsis">
+					<h3 class="text-2xl font-semibold text-gray-900 dark:text-white overflow-hidden">
 						{goalDetails.title}
 					</h3>
 					<button
@@ -422,7 +426,7 @@
 					</button>
 				</div>
 				<div class="p-4 border-b">
-					<p class="text-lg leading-relaxed overflow-hidden text-ellipsis">
+					<p class="text-lg leading-relaxed overflow-hidden">
 						{goalDetails.description}
 					</p>
 				</div>
