@@ -19,13 +19,13 @@
 
 	let showToast = false;
 	let toastMessage;
-	let toastColor;
+	let toastColor = "red";
 	let toastIcon;
 
 	function showAlert(msg, color) {
+		toastColor = color;
 		showToast = true;
 		toastMessage = msg;
-		toastColor = color;
 	}
 
 	function closeAlert() {
@@ -129,22 +129,22 @@
 	</div>
 </div>
 {:else}
-<div class="grid grid-cols-1 my-10 mx-48 gap-5">
+<div class="grid grid-cols-1 my-10 mx-5 md:mx-10 lg:mx-48 gap-5">
     <div class="flex place-content-between">
         <div class="text-5xl font-extrabold">{$userProfile.first_name + " " + $userProfile.last_name}</div>
-        <button type="button" on:click={showReportModal} class="text-white bg-wb-orange hover:bg-wb-blue font-medium rounded-lg text-sm px-5 py-2.5">Report a Problem</button>
+        <button type="button" on:click={showReportModal} class="max-h-[3rem] sm:max-h-full text-white bg-wb-orange hover:bg-wb-blue font-medium rounded-lg text-xs px-1 sm:px-2">Report a Problem</button>
     </div>
     <div class="grid gap-2">
         <div class="text-xl font-bold">Your Bio</div>
-        <textarea id="bio" bind:value={bio} rows="4" placeholder="Add something about yourself!" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-wb-orange focus:border-wb-orange"></textarea>
+        <textarea id="bio" bind:value={bio} rows="6" placeholder="Add something about yourself!" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-wb-orange focus:border-wb-orange"></textarea>
         <button on:click={updateBio} disabled={bioLoading} type="button" class="text-white bg-wb-orange hover:bg-wb-blue font-medium rounded-lg text-sm px-5 py-2 w-36">Save Bio</button>
     </div>
     <div class="grid gap-2">
         <div class="text-xl font-bold">Goals List</div>
-        <textarea id="goals-list" bind:value={goalsList} rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-wb-orange focus:border-wb-orange"></textarea>
+        <textarea id="goals-list" bind:value={goalsList} rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-wb-orange focus:border-wb-orange"></textarea>
         <button on:click={updateGoalsList} disabled={goalsListLoading} type="button" class="text-white bg-wb-orange hover:bg-wb-blue font-medium rounded-lg text-sm px-5 py-2 w-36">Save Goals List</button>
     </div>
-    <div class="flex place-content-end mt-10">
+    <div class="flex place-content-end mt-10 mb-5">
         <button on:click={logOut} disabled={logOutLoading} type="button" class="text-white bg-red-600 hover:bg-red-400 font-medium rounded-lg text-sm px-5 py-2">Log out</button>
     </div>
 </div>
@@ -153,7 +153,8 @@
 
 {#if showToast}
 <div aria-hidden="true" class="h-screen fixed bottom-0 left-0 flex bg-black/50 place-items-end">
-	<div class="fixed flex items-center p-4 m-4 w-full max-w-xs text-gray-500 bg-{toastColor} rounded-lg border shadow dark:text-gray-400 dark:bg-gray-800">
+	<!-- <div class="fixed flex items-center p-4 m-4 w-full max-w-xs text-gray-500 bg-{toastColor} rounded-lg border shadow dark:text-gray-400 dark:bg-gray-800"> -->
+	<div class="fixed flex items-center p-4 m-4 w-full max-w-xs text-gray-500 rounded-lg border shadow dark:text-gray-400 dark:bg-gray-800 {toastColor == "green-200" ? "bg-green-200" : "bg-red-200"}">
 		<!-- <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
 			<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
 			<span class="sr-only">Check icon</span>
@@ -184,11 +185,11 @@
 			<div class="py-4 px-4">
 				<form class="space-y-4" action="https://formspree.io/f/mrgdkrbw" method="POST">
 					<div>
-						<label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
+						<label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your Email</label>
 						<input type="email" name="email" id="email-box" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
 					</div>
 					<div>
-						<label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your message:</label>
+						<label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your Message</label>
 						<textarea id="message" name="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
 					</div>
 					<button type="submit" class="w-full text-white bg-wb-blue hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>

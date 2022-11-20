@@ -285,12 +285,12 @@
 		</div>
 	</div>
 {:else}
-	<div class="grid grid-rows-1 grid-cols-2 mx-10 my-5 gap-5">
-		<div class="grid grid-cols-1 gap-5">
+	<div class="grid lg:grid-rows-1 lg:grid-cols-2 mx-5 sm:mx-10 my-5 gap-5">
+		<div class="grid grid-cols-1 gap-5 md:gap-5 lg:gap-0 xl:gap-5">
 			<p class="text-4xl font-bold">Your Goals:</p>
-			<div class="flex gap-10 justify-between">
+			<div class="sm:flex sm:gap-10 sm:justify-between">
 				<div
-					class="w-full h-52 2xl:h-80 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200"
+					class="w-full h-[24rem] md:h-[24rem] lg:h-[17rem] xl:h-[14rem] 2xl:h-[21rem] bg-wb-orange overflow-auto grid grid-cols-1 sm:grid-cols-2 border-4 border-gray-200"
 				>
 					{#each $goals as goal}
 						<div class="relative">
@@ -299,8 +299,8 @@
 								class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 {goal.isCompleted ? 'opacity-70 line-through' : ''}"
 							>
 								<div class="relative flex flex-col">
-										<div class="max-w-[10rem]">
-											<h5 class="text-xl font-bold tracking-tight text-gray-900 overflow-hidden truncate">{goal.title}</h5>
+										<div class="max-w-[16rem] md:max-w-[12rem] lg:max-w-[6rem] xl:max-w-[10rem] 2xl:max-w-[16rem]">
+											<h5 class="xl:text-xl font-bold tracking-tight text-gray-900 overflow-hidden truncate">{goal.title}</h5>
 										</div>
 										<p class="font-normal text-gray-700 overflow-hidden truncate">{goal.date}</p>
 								</div>
@@ -331,14 +331,14 @@
 				</div>
 				<!-- <button class="w-40 text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5" data-modal-toggle="addGoalModal">Add Goal</button> -->
 				<button
-					class="w-40 text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5"
+					class="mt-3 sm:mt-0 w-full sm:w-40 lg:h-[17rem] xl:h-[14rem] 2xl:h-[21rem] text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5"
 					on:click={switchAddGoalModal}>Add Goal</button
 				>
 			</div>
 			<p class="text-4xl font-bold">Your Buddy's Goals:</p>
-			<div class="flex gap-10 justify-between">
+			<div class="sm:flex sm:gap-10 sm:justify-between">
 				<div
-					class="w-full h-52 2xl:h-80 bg-wb-orange overflow-auto grid grid-cols-2 border-4 border-gray-200"
+					class="w-full h-[24rem] md:h-[24rem] lg:h-[17rem] xl:h-[14rem] 2xl:h-[21rem] bg-wb-orange overflow-auto grid grid-cols-1 sm:grid-cols-2 border-4 border-gray-200"
 				>
 					{#each $buddyGoals as buddyGoal}
 						<div class="relative">
@@ -347,7 +347,7 @@
 								class="block m-2 p-3 h-20 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 {buddyGoal.isCompleted ? 'opacity-70 line-through' : ''}"
 							>
 								<div class="relative flex flex-col">
-										<div class="max-w-[10rem]">
+										<div class="max-w-[16rem] md:max-w-[12rem] lg:max-w-[6rem] xl:max-w-[10rem] 2xl:max-w-[16rem]">
 											<h5 class="text-xl font-bold tracking-tight text-gray-900 overflow-hidden truncate">{buddyGoal.title}</h5>
 										</div>
 										<p class="font-normal text-gray-700 overflow-hidden truncate">{buddyGoal.date}</p>
@@ -378,7 +378,7 @@
 				</div>
 				<button
 					on:click={toPartnerProfile}
-					class="w-40 text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5"
+					class="mt-3 sm:mt-0 w-full sm:w-40 lg:h-[17rem] xl:h-[14rem] 2xl:h-[21rem] text-white bg-gray-400 hover:bg-wb-blue font-medium text-sm px-5 py-2.5"
 					>View Partner Profile</button
 				>
 			</div>
@@ -398,7 +398,7 @@
 		aria-hidden="true"
 		class="w-screen h-screen fixed top-0 left-0 flex justify-center items-center bg-black/50"
 	>
-		<div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+		<div class="relative p-4 w-full max-w-2xl max-h-full overflow-auto">
 			<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
 				<div class="flex justify-between items-start px-4 pt-4 rounded-t dark:border-gray-600">
 					<h3 class="text-2xl font-semibold text-gray-900 dark:text-white overflow-hidden">
@@ -469,7 +469,7 @@
 		aria-hidden="true"
 		class="w-screen h-screen fixed top-0 left-0 flex justify-center items-center bg-black/50"
 	>
-		<div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+		<div class="relative p-4 w-full max-w-2xl max-h-full overflow-auto">
 			<!-- Modal content -->
 			<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
 				<!-- Modal header -->
@@ -606,7 +606,7 @@
 						<div>
 							<label
 								for="email"
-								class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label
+								class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your Email</label
 							>
 							<input
 								type="email"
@@ -620,7 +620,7 @@
 							<label
 								for="message"
 								class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-								>Your message:</label
+								>Your Message</label
 							>
 							<textarea
 								id="message"

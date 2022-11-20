@@ -37,20 +37,20 @@
 	</div>
 </div>
 {:else}
-<div class="bg-gray-300 2xl:h-screen">
+<div class="bg-gray-300 h-screen">
 
-<div class="flex justify-center text-3xl font-bold pt-10">
-	Streak Calendar
-</div>
-<div class="flex justify-center text-lg mt-5">
-	Check how many days you have checked in with your partner!
-</div>
-
-<div>
-	<div class="antialiased sans-serif">
-		<CalendarBlocks/>
+	<div class="flex justify-center text-3xl font-bold pt-10">
+		Streak Calendar
 	</div>
-</div>
+	<div class="mx-5 text-center sm:mx-0 flex justify-center text-lg mt-5">
+		Check how many days you have checked in with your partner!
+	</div>
+
+	<div class="bg-gray-300">
+		<div class="antialiased sans-serif">
+			<CalendarBlocks/>
+		</div>
+	</div>
 
 </div>
 {/if}

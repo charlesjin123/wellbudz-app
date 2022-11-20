@@ -9,7 +9,7 @@
 	function showAlert(msg, color) {
 		showToast = true;
 		toastMessage = msg;
-		toastColor = color;
+		toastColor.set(color);
 	}
 
 	function closeAlert() {
